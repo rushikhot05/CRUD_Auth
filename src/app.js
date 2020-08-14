@@ -1,18 +1,24 @@
 const express = require('express')
-const app = express();
-const port = process.env.PORT;
-const userRouter = require('./routers/student')
 const students = require("./routers/student")
 const users = require("./routers/user");
+const app = express();
+const port = process.env.PORT;
 const bodyParser = require('body-parser');
-app.use(bodyParser.json());
-require('./db/db');
+const jwt = require('jsonwebtoken')
 
-app.set('secretKey', process.env.JWT_KEY);
+const mongoose = require("mongoose");
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://127.0.0.1:27017/CRUD_Auth', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
+mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
     res.json({"tutorial": "Building REST API"});
 });
+
+// app.set('secretKey', process.env.JWT_KEY);
+
 
 app.use('/users', users);
 app.use('/students', validateUser, students);
@@ -51,7 +57,7 @@ app.use(function (err, req, res, next) {
         res.status(500).json({ message: "Something looks wrong :( !!!" });
 });
 
-app.use(userRouter)
+// app.use(userRouter)
 
 app.listen(port, () => {
     console.log(`Connected to port ${port}`);

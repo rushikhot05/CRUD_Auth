@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
 
-const infoSchema = mongoose.Schema({
+const studentSchema = new mongoose.Schema({
     firstName: {
         type: String,
         required: true,
@@ -24,13 +23,7 @@ const infoSchema = mongoose.Schema({
     grades: {
         type: Number,
         required: true
-    },
-    tokens: [{
-        token: {
-            type: String,
-            required: true
-        }
-    }]
+    }
 })
 
-module.exports = mongoose.model('Student', infoSchema)
+module.exports = mongoose.model('Student', studentSchema)

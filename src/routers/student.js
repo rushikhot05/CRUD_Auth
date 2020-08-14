@@ -1,8 +1,4 @@
 const express = require('express');
-// const { Router } = require('express');
-const User = require('../models/student');
-// const mongoose = require('mongoose')
-// mongoose.set('useFindAndModify', false)
 const studentController = require('../controllers/student')
 const routes = express.Router();
 
